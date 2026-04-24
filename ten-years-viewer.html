@@ -29,12 +29,13 @@
   .nickname-input { width: 100%; padding: 10px 14px; background: rgba(255,255,255,0.8); border: 1px solid rgba(0,0,0,0.2); border-radius: 2px; font-family: var(--font-mono); font-size: 14px; color: var(--ink); outline: none; transition: border-color 0.2s; margin-bottom: 24px; }
   .nickname-input::placeholder { color: rgba(0,0,0,0.3); font-style: italic; }
   .nickname-input:focus { border-color: var(--punch); }
-  .role-buttons { display: flex; gap: 4px; flex-wrap: nowrap; margin-bottom: 24px; overflow-x: auto; }
-  .role-btn { padding: 6px 10px; background: transparent; border: 1px solid rgba(0,0,0,0.2); border-radius: 2px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--gray); cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+  .role-buttons { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
+  .role-btn { padding: 8px 14px; background: transparent; border: 1px solid rgba(0,0,0,0.2); border-radius: 2px; font-family: var(--font-mono); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--gray); cursor: pointer; transition: all 0.2s; }
   .role-btn:hover { border-color: rgba(0,0,0,0.4); color: var(--ink); }
   .role-btn.selected { background: var(--punch); border-color: var(--punch); color: white; }
   .prompt-question { font-family: var(--font-sans); font-size: 20px; font-weight: 300; line-height: 1.4; color: var(--ink); margin-bottom: 6px; padding-left: 14px; border-left: 2px solid var(--punch); }
   .prompt-sub { font-size: 12px; color: var(--gray); margin-bottom: 16px; padding-left: 14px; font-family: var(--font-sans); }
+  .prompt-sub span { opacity: 0.6; font-size: 10px; }
   .input-area { position: relative; margin-bottom: 16px; }
   textarea { width: 100%; min-height: 130px; background: rgba(255,255,255,0.8); border: 1px solid rgba(0,0,0,0.2); border-radius: 2px; padding: 14px; font-family: var(--font-mono); font-size: 14px; font-weight: 300; color: var(--ink); resize: none; outline: none; transition: border-color 0.2s; line-height: 1.7; }
   textarea::placeholder { color: rgba(0,0,0,0.3); font-style: italic; }
@@ -50,16 +51,16 @@
   @keyframes dot-bounce { 0%, 80%, 100% { transform: scale(0.8); opacity: 0.4; } 40% { transform: scale(1); opacity: 1; } }
   .error-msg { font-size: 12px; color: var(--punch); margin-top: 10px; display: none; font-family: var(--font-sans); }
   .result-screen { display: none; }
-  .library-card { background: #D6EAF8; color: var(--ink); border-radius: 2px; overflow: hidden; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+  .library-card { background: var(--paper); color: var(--ink); border-radius: 2px; overflow: hidden; opacity: 0; transform: translateY(20px); transition: all 0.5s ease; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
   .library-card.visible { opacity: 1; transform: translateY(0); }
-  .card-stripe { display: none; }
+  .card-stripe { height: 8px; background: repeating-linear-gradient(90deg, var(--punch) 0px, var(--punch) 20px, #1A1814 20px, #1A1814 40px, var(--gold) 40px, var(--gold) 60px, #1A1814 60px, #1A1814 80px); }
   .card-header { display: flex; justify-content: space-between; align-items: flex-start; padding: 16px 20px 12px; border-bottom: 1px solid rgba(26,24,20,0.1); }
   .card-library { font-size: 8px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--gray); margin-bottom: 2px; }
   .card-title { font-family: var(--font-mono); font-size: 18px; font-weight: 600; color: var(--ink); letter-spacing: -0.5px; }
   .card-number { font-family: var(--font-mono); font-size: 11px; font-weight: 600; color: var(--punch); letter-spacing: 1px; }
   .hole-row { display: flex; gap: 5px; padding: 10px 20px; background: var(--ink); }
   .hole { width: 7px; height: 7px; border-radius: 50%; background: rgba(245,240,232,0.2); }
-  .hole.punched { background: var(--punch); box-shadow: 0 0 5px rgba(45,31,94,0.7); }
+  .hole.punched { background: var(--punch); box-shadow: 0 0 5px rgba(232,59,42,0.7); }
   .card-body { padding: 20px; }
   .card-name-line { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
   .card-name { font-family: var(--font-mono); font-size: 16px; font-weight: 600; color: var(--ink); letter-spacing: 1px; text-transform: uppercase; }
@@ -112,7 +113,7 @@
     </div>
 
     <div class="prompt-question">What did this exhibition leave in you?</div>
-    <div class="prompt-sub">This AI tool will analyze your experience of this exhibition. <span style="opacity:0.5; font-size:11px;">for the purpose of interaction, not to define you, nor to train this AI</span></div>
+    <div class="prompt-sub">This AI tool will analyze your experience of this exhibition. <span>for the purpose of interaction, not to define you, nor to train this AI</span></div>
 
     <div class="input-area">
       <textarea id="responseText" placeholder="Write freely. A few words or a few sentences." maxlength="400" oninput="updateCount(this)"></textarea>
@@ -162,45 +163,36 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>
-  // ─── 새 전시용으로 바꿀 것들 ───
   const WORKER_URL       = 'https://ten-years-api.congjipark.workers.dev';
   const EMAILJS_KEY      = 'i6V9Zhl_2a4PRgaIF';
   const EMAILJS_SERVICE  = 'service_36ikg5b';
   const EMAILJS_TEMPLATE = 'template_wf63af8';
-  // ──────────────────────────────
 
   emailjs.init(EMAILJS_KEY);
 
   let visitCount = parseInt(localStorage.getItem('tenYearsCount') || '0');
   let selectedLang = 'en';
   let selectedRole = '';
-
   const langNames = { en: 'English', ko: '한국어', es: 'Español', fr: 'Français', de: 'Deutsch', zh: '中文', pt: 'Português' };
 
   function selectLang(btn, lang) {
     document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    selectedLang = lang;
+    btn.classList.add('selected'); selectedLang = lang;
   }
-
   function selectRole(btn, role) {
     document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    selectedRole = role;
+    btn.classList.add('selected'); selectedRole = role;
   }
-
   function updateCount(el) {
     const len = el.value.length;
     document.getElementById('charCount').textContent = len + ' / 400';
     document.getElementById('submitBtn').disabled = len < 5;
   }
-
   function generateCardId() {
     visitCount++;
     localStorage.setItem('tenYearsCount', visitCount);
     return '#' + String(visitCount).padStart(4, '0');
   }
-
   function generateHoles(seed) {
     const row = document.getElementById('holeRow');
     row.innerHTML = '';
@@ -224,26 +216,16 @@
 
     try {
       const response = await fetch(WORKER_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: "claude-haiku-4-5-20251001",
+          model: 'claude-haiku-4-5-20251001',
           max_tokens: 1000,
           system: `You are an AI analysis system for the art exhibition "TEN YEARS OF SOLIDARITY".
-
 A visitor responded to: "What did this exhibition leave in you?"
 Analyze their response. Respond ONLY in ${langNames[selectedLang]} with valid JSON, no markdown, no backticks:
-
-{
-  "key_quote": "The single most essential phrase distilled from their response",
-  "analysis": "2-3 sentences: who they are in relation to this exhibition, how they engage with it. Personal and insightful.",
-  "visitor_type": "2-3 word archetype",
-  "tags": ["tag1", "tag2", "tag3"],
-  "seed": <integer 0-4095>
-}`,
-          messages: [{ role: "user", content: `Nickname: ${nickname}
-Role: ${selectedRole || 'Not specified'}
-Response: ${text}` }],
+{"key_quote":"...","analysis":"...","visitor_type":"...","tags":["...","...","..."],"seed":<0-4095>}`,
+          messages: [{ role: 'user', content: `Nickname: ${nickname}\nRole: ${selectedRole || 'Not specified'}\nResponse: ${text}` }],
           visitorData: { nickname, role: selectedRole || 'Not specified', language: selectedLang, response: text }
         })
       });
@@ -263,15 +245,6 @@ Response: ${text}` }],
   }
 
   function showResult(data, originalText, nickname) {
-    const roleColors = {
-      'Visitor': '#C8D8E8',
-      'Artist': '#E8C8D0',
-      'Organizer': '#D8D8D8',
-      'Panel Speaker': '#D0C8E8',
-    };
-    const cardBg = roleColors[selectedRole] || '#F5F0E8';
-    document.getElementById('resultCard').style.background = cardBg;
-
     const cardId = generateCardId();
     const now = new Date();
     const ts = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
@@ -313,10 +286,8 @@ Response: ${text}` }],
   }
 
   function resetForm() {
-    selectedRole = '';
-    selectedLang = 'en';
-    document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('selected'));
-    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('selected'));
+    selectedRole = ''; selectedLang = 'en';
+    document.querySelectorAll('.role-btn, .lang-btn').forEach(b => b.classList.remove('selected'));
     document.querySelector('.lang-btn').classList.add('selected');
     document.getElementById('responseText').value = '';
     document.getElementById('nicknameInput').value = '';

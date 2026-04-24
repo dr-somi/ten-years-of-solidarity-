@@ -11,7 +11,7 @@
   body { font-family:var(--font-mono); background:var(--bg); overflow:hidden; width:100vw; height:100vh; }
 
   .display-header { position:fixed; top:0; left:0; right:0; padding:20px 40px; display:flex; justify-content:space-between; align-items:center; z-index:100; background:linear-gradient(to bottom,rgba(13,13,11,0.95) 0%,transparent 100%); }
-  .display-title { font-size:13px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); }
+  .display-title { font-size:13px; letter-spacing:4px; text-transform:uppercase; color:#FFFFFF; }
   .display-subtitle { font-size:11px; letter-spacing:2px; color:rgba(245,240,232,0.3); text-transform:uppercase; }
   .live-indicator { display:flex; align-items:center; gap:8px; font-size:11px; letter-spacing:2px; color:rgba(245,240,232,0.4); text-transform:uppercase; }
   .live-dot { width:7px; height:7px; border-radius:50%; background:var(--punch); animation:pulse 2s infinite; }
@@ -33,10 +33,10 @@
   .float-card.role-faculty { --card-bg:#D8E8C0; --card-ink:#1E2A10; --card-accent:#4A6A20; }
   .float-card.role-artist  { --card-bg:#E8F0D8; --card-ink:#1A2A14; --card-accent:#5A7A30; }
   .float-card.role-outside { --card-bg:#D0E8D8; --card-ink:#0A2018; --card-accent:#1A5A3A; }
-  .float-card.role-speaker { --card-bg:#E8D08A; --card-ink:#2A1A08; --card-accent:#8A5A10; }
-  .float-card.role-default { --card-bg:#F5F0E8; --card-ink:#1A1814; --card-accent:#E83B2A; }
+  .float-card.role-speaker { --card-bg:#D6EAF8; --card-ink:#1A1814; --card-accent:#E83B2A; }
+  .float-card.role-default { --card-bg:#D6EAF8; --card-ink:#1A1814; --card-accent:#E83B2A; }
 
-  .card-stripe { height:6px; background:repeating-linear-gradient(90deg,var(--card-accent) 0px,var(--card-accent) 16px,var(--card-ink) 16px,var(--card-ink) 32px,var(--gold) 32px,var(--gold) 48px,var(--card-ink) 48px,var(--card-ink) 64px); }
+  .card-stripe { display:none; }
   .card-inner { background:var(--card-bg); padding:12px 14px; }
   .card-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; }
   .card-exhibition { font-size:7px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--card-accent); margin-bottom:2px; }
@@ -54,7 +54,7 @@
 
   .display-footer { position:fixed; bottom:0; left:0; right:0; padding:20px 40px; display:flex; justify-content:space-between; align-items:center; z-index:100; background:linear-gradient(to top,rgba(13,13,11,0.95) 0%,transparent 100%); }
   .counter { font-size:11px; letter-spacing:2px; color:rgba(245,240,232,0.3); text-transform:uppercase; }
-  .counter span { color:var(--gold); font-weight:600; }
+  .counter span { color:#FFFFFF; font-weight:600; }
   .qr-hint { font-size:11px; letter-spacing:2px; color:rgba(245,240,232,0.3); text-transform:uppercase; }
   .qr-hint em { color:var(--punch); font-style:normal; }
 </style>

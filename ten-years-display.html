@@ -6,31 +6,20 @@
 <title>PUNCH IN — Ten Years of Solidarity · Live Display</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #D6EAF8;
-    --punch: #E83B2A;
-    --gold: #C8A84B;
-    --punch-dim: #8B2419;
-    --cream: #F5F0E8;
-    --navy-mid: #1A1814;
-    --navy-light: #4A4540;
-    --font-mono: 'IBM Plex Mono', monospace;
-    --font-sans: 'IBM Plex Sans', sans-serif;
-  }
+  :root { --bg:#FAFAFA; --punch:#E83B2A; --gold:#C8A84B; --font-mono:'IBM Plex Mono',monospace; --font-sans:'IBM Plex Sans',sans-serif; }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { font-family:var(--font-mono); background:var(--bg); overflow:hidden; width:100vw; height:100vh; }
-  body::before { content:''; position:fixed; inset:0; background-image:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(61,48,112,0.05) 2px,rgba(61,48,112,0.05) 4px); pointer-events:none; z-index:0; }
 
   .display-header { position:fixed; top:0; left:0; right:0; padding:20px 40px; display:flex; justify-content:space-between; align-items:center; z-index:100; background:linear-gradient(to bottom,rgba(13,13,11,0.95) 0%,transparent 100%); }
-  .display-title { font-size:13px; letter-spacing:4px; text-transform:uppercase; color:var(--cream); }
-  .display-subtitle { font-size:11px; letter-spacing:2px; color:rgba(245,240,232,0.6); text-transform:uppercase; }
-  .live-indicator { display:flex; align-items:center; gap:8px; font-size:11px; letter-spacing:2px; color:rgba(245,240,232,0.6); text-transform:uppercase; }
+  .display-title { font-size:13px; letter-spacing:4px; text-transform:uppercase; color:var(--gold); }
+  .display-subtitle { font-size:11px; letter-spacing:2px; color:rgba(245,240,232,0.3); text-transform:uppercase; }
+  .live-indicator { display:flex; align-items:center; gap:8px; font-size:11px; letter-spacing:2px; color:rgba(245,240,232,0.4); text-transform:uppercase; }
   .live-dot { width:7px; height:7px; border-radius:50%; background:var(--punch); animation:pulse 2s infinite; }
   @keyframes pulse { 0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(0.8);} }
 
   #cardStage { position:fixed; inset:0; z-index:1; }
 
-  .float-card { position:absolute; width:250px; border-radius:2px; overflow:hidden; box-shadow:0 8px 40px rgba(0,0,0,0.6); opacity:0; transition:opacity 1.2s ease; }
+  .float-card { position:absolute; width:250px; border-radius:2px; overflow:hidden; box-shadow:0 8px 32px rgba(0,0,0,0.5); opacity:0; transition:opacity 1.2s ease; }
   .float-card.visible { opacity:1; animation:floatBig var(--dur) ease-in-out infinite var(--dly); }
   @keyframes floatBig {
     0%   { transform:translateY(0px)   rotate(var(--rot)); }
@@ -40,14 +29,14 @@
     100% { transform:translateY(0px)   rotate(var(--rot)); }
   }
 
-  .float-card.role-student  { --card-bg:#E8E0F8; --card-ink:#1A1040; --card-accent:#4A2A8A; }
-  .float-card.role-faculty  { --card-bg:#F5F0E8; --card-ink:#2A1F0A; --card-accent:#7A6030; }
-  .float-card.role-staff    { --card-bg:#DDD8F0; --card-ink:#181028; --card-accent:#5A4A90; }
-  .float-card.role-curator  { --card-bg:#EDE0F5; --card-ink:#281040; --card-accent:#7A3A9A; }
-  .float-card.role-outside  { --card-bg:#F0EBF8; --card-ink:#1A1030; --card-accent:#6A4AAA; }
-  .float-card.role-default  { --card-bg:#EAE4F8; --card-ink:#1A1040; --card-accent:#5A4A90; }
+  .float-card.role-student { --card-bg:#C8E8D0; --card-ink:#1A2A1E; --card-accent:#2A6A3A; }
+  .float-card.role-faculty { --card-bg:#D8E8C0; --card-ink:#1E2A10; --card-accent:#4A6A20; }
+  .float-card.role-artist  { --card-bg:#E8F0D8; --card-ink:#1A2A14; --card-accent:#5A7A30; }
+  .float-card.role-outside { --card-bg:#D0E8D8; --card-ink:#0A2018; --card-accent:#1A5A3A; }
+  .float-card.role-speaker { --card-bg:#E8D08A; --card-ink:#2A1A08; --card-accent:#8A5A10; }
+  .float-card.role-default { --card-bg:#F5F0E8; --card-ink:#1A1814; --card-accent:#E83B2A; }
 
-  .card-stripe { height:6px; background:repeating-linear-gradient(90deg,var(--card-accent) 0px,var(--card-accent) 16px,var(--card-ink) 16px,var(--card-ink) 32px,rgba(245,240,232,0.5) 32px,rgba(245,240,232,0.5) 48px,var(--card-ink) 48px,var(--card-ink) 64px); }
+  .card-stripe { height:6px; background:repeating-linear-gradient(90deg,var(--card-accent) 0px,var(--card-accent) 16px,var(--card-ink) 16px,var(--card-ink) 32px,var(--gold) 32px,var(--gold) 48px,var(--card-ink) 48px,var(--card-ink) 64px); }
   .card-inner { background:var(--card-bg); padding:12px 14px; }
   .card-top { display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:8px; }
   .card-exhibition { font-size:7px; font-weight:600; letter-spacing:2px; text-transform:uppercase; color:var(--card-accent); margin-bottom:2px; }
@@ -64,9 +53,9 @@
   .card-type { font-size:8px; font-weight:600; color:var(--card-accent); letter-spacing:1px; text-transform:uppercase; }
 
   .display-footer { position:fixed; bottom:0; left:0; right:0; padding:20px 40px; display:flex; justify-content:space-between; align-items:center; z-index:100; background:linear-gradient(to top,rgba(13,13,11,0.95) 0%,transparent 100%); }
-  .counter { font-size:11px; letter-spacing:2px; color:rgba(245,240,232,0.6); text-transform:uppercase; }
-  .counter span { color:var(--punch); font-weight:600; }
-  .qr-hint { font-size:11px; letter-spacing:2px; color:rgba(245,240,232,0.6); text-transform:uppercase; }
+  .counter { font-size:11px; letter-spacing:2px; color:rgba(245,240,232,0.3); text-transform:uppercase; }
+  .counter span { color:var(--gold); font-weight:600; }
+  .qr-hint { font-size:11px; letter-spacing:2px; color:rgba(245,240,232,0.3); text-transform:uppercase; }
   .qr-hint em { color:var(--punch); font-style:normal; }
 </style>
 </head>
@@ -87,37 +76,45 @@
 </div>
 
 <script>
-  const SHEET_ID  = '1H8f7BPS94EuZqJTLAzmT5MbO2v5F6oP-qZRatSUofJg';
+  const SHEET_ID = '1H8f7BPS94EuZqJTLAzmT5MbO2v5F6oP-qZRatSUofJg';
   const SHEET_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&sheet=Sheet1`;
 
   let displayedIds = new Set();
-  let totalPlaced  = 0;
+  let totalPlaced = 0;
 
   const ZONES = [
-    [ 2,25, 13,35], [32,55, 13,35], [62,78, 13,35],
-    [ 2,25, 40,60], [32,55, 40,60], [62,78, 40,60],
-    [ 2,25, 65,82], [32,55, 65,82], [62,78, 65,82],
+    [ 2, 25,  13, 35],
+    [32, 55,  13, 35],
+    [62, 78,  13, 35],
+    [ 2, 25,  40, 60],
+    [32, 55,  40, 60],
+    [62, 78,  40, 60],
+    [ 2, 25,  65, 82],
+    [32, 55,  65, 82],
+    [62, 78,  65, 82],
   ];
 
   function getPos(idx) {
     const z = ZONES[idx % ZONES.length];
-    return { left:(z[0]+Math.random()*(z[1]-z[0])).toFixed(1)+'vw', top:(z[2]+Math.random()*(z[3]-z[2])).toFixed(1)+'vh' };
+    return {
+      left: (z[0] + Math.random() * (z[1] - z[0])).toFixed(1) + 'vw',
+      top:  (z[2] + Math.random() * (z[3] - z[2])).toFixed(1) + 'vh'
+    };
   }
 
   function getRoleClass(role) {
     if (!role) return 'role-default';
     const r = role.toLowerCase();
-    if (r.includes('student'))         return 'role-student';
-    if (r.includes('faculty'))         return 'role-faculty';
-    if (r.includes('staff'))           return 'role-staff';
-    if (r.includes('curator')||r.includes('artist')) return 'role-curator';
-    if (r.includes('outside'))         return 'role-outside';
+    if (r.includes('visitor')) return 'role-visitor';
+    if (r.includes('artist')) return 'role-artist';
+    if (r.includes('organizer')) return 'role-organizer';
+    if (r.includes('speaker')) return 'role-speaker';
     return 'role-default';
   }
 
   function makeHoles(seed) {
-    let h='';
-    for(let i=0;i<12;i++) h+=`<div class="hole${((seed>>i)&1)?' punched':''}"></div>`;
+    let h = '';
+    for (let i = 0; i < 12; i++) h += `<div class="hole${((seed>>i)&1)?' punched':''}"></div>`;
     return h;
   }
 
@@ -131,11 +128,11 @@
     const parsed = parseResult(cardData.result);
     if (!parsed) return;
 
-    const pos = getPos(idx);
-    const seed = parsed.seed || Math.floor(Math.random()*4095);
-    const rot  = (Math.random()*10-5).toFixed(1)+'deg';
-    const dur  = (7+Math.random()*5).toFixed(1)+'s';
-    const dly  = '-'+(Math.random()*10).toFixed(1)+'s';
+    const pos  = getPos(idx);
+    const seed = parsed.seed || Math.floor(Math.random() * 4095);
+    const rot  = (Math.random() * 10 - 5).toFixed(1) + 'deg';
+    const dur  = (7 + Math.random() * 5).toFixed(1) + 's';
+    const dly  = '-' + (Math.random() * 10).toFixed(1) + 's';
 
     const tags = (parsed.tags||[]).slice(0,3).map(t=>`<div class="card-tag">${t}</div>`).join('');
     const time = cardData.timestamp ? new Date(cardData.timestamp).toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}) : '';
@@ -143,10 +140,11 @@
 
     const el = document.createElement('div');
     el.className = `float-card ${getRoleClass(cardData.role)}`;
-    el.style.left = pos.left; el.style.top = pos.top;
-    el.style.setProperty('--rot',rot);
-    el.style.setProperty('--dur',dur);
-    el.style.setProperty('--dly',dly);
+    el.style.left = pos.left;
+    el.style.top  = pos.top;
+    el.style.setProperty('--rot', rot);
+    el.style.setProperty('--dur', dur);
+    el.style.setProperty('--dly', dly);
     el.innerHTML = `
       <div class="card-stripe"></div>
       <div class="card-inner">
@@ -167,31 +165,43 @@
       </div>`;
 
     document.getElementById('cardStage').appendChild(el);
-    setTimeout(()=>el.classList.add('visible'),120);
+    setTimeout(() => el.classList.add('visible'), 120);
   }
 
   async function fetchData() {
     try {
-      const res  = await fetch(SHEET_URL+'&t='+Date.now());
+      const res  = await fetch(SHEET_URL + '&t=' + Date.now());
       const text = await res.text();
-      const json = JSON.parse(text.replace('/*O_o*/','').replace('google.visualization.Query.setResponse(','').replace(/\);$/, ''));
-      const rows = json.table?.rows||[];
+      const json = JSON.parse(
+        text.replace('/*O_o*/','').replace('google.visualization.Query.setResponse(','').replace(/\);$/,'')
+      );
 
-      rows.forEach((row,i)=>{
+      const rows = json.table?.rows || [];
+
+      rows.forEach((row, i) => {
         if (displayedIds.has(i)) return;
-        const c = row.c||[];
-        const result = c[5]?.v??'';
+        const c = row.c || [];
+        const result = c[5]?.v ?? '';
         if (!result) return;
+
         displayedIds.add(i);
-        const idx = totalPlaced++;
-        setTimeout(()=>placeCard({
-          timestamp:c[0]?.v??'', nickname:c[1]?.v??'', role:c[2]?.v??'',
-          language:c[3]?.v??'', response:c[4]?.v??'', result
-        },idx), idx*400);
+
+        const idx = totalPlaced;
+        totalPlaced++;
+
+        setTimeout(() => placeCard({
+          timestamp: c[0]?.v ?? '',
+          nickname:  c[1]?.v ?? '',
+          role:      c[2]?.v ?? '',
+          language:  c[3]?.v ?? '',
+          response:  c[4]?.v ?? '',
+          result
+        }, idx), idx * 400);
       });
 
       document.getElementById('totalCount').textContent = totalPlaced;
-    } catch(e){ console.error(e); }
+
+    } catch(e) { console.error(e); }
   }
 
   fetchData();
